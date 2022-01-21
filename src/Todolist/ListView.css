@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.main_div {
+  width: auto;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10%;
+  text-align: center;
+}
+.center_div {
+  width: 200px;
+  height: fit-content;
+  margin-top: 100px;
+  background-color: #f4f4f4;
+  box-shadow: 5px 5px 25px 10px rgba(155, 124, 84, 0.5);
+  border-radius: 15px;
+}
+.header {
+  color: white;
+  background: transparent;
+  background-color: #8566aa;
+  padding: 10px;
+  box-shadow: 5px 5px 25px 10px rgba(134, 111, 177, 0.5);
+}
+
+.header h1 {
+  display: inline;
+}
+input {
+  text-align: center;
+  height: 30px;
+  top: 10px;
+  border: none;
+  border-bottom: 2px solid #8566aa;
+  background: transparent;
+  font-size: 15px;
+  font-weight: bold;
+  width: 60%;
+  outline: none;
+}
+button {
+  width: 150px;
+  padding: 10px;
+  margin: 30px;
+  border-radius: 10%;
+  border-color: transparent;
+  background-color: #8566aa;
+  color: #fff;
+  font-size: 20px;
+  margin-left: 20px;
+  box-shadow: 5px 5px 10px 7px rgba(134, 111, 177, 0.5);
+}
+
+button:hover {
+  background-color: rgb(148, 206, 177);
+}
+
+ul {
+  margin-top: 10px;
+}
+
+ul li {
+  padding-left: 35%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  color: #595064;
+  text-transform: capitalize;
+  border-bottom: 2px solid rgb(127, 56, 199);
+  box-shadow: 3px 5px 5px 1px;
+  gap: 10px;
+  margin: 10px;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.secondheader {
+  margin-top: auto;
+  color: white;
+  background: transparent;
+  background-color: #8566aa;
+  padding: 6px;
+  box-shadow: 5px 5px 25px 10px rgba(134, 111, 177, 0.5);
+}
+#form {
+  width: max-content;
+  margin: 40px auto;
+  font-family: "Segoe UI", sans-serif;
+  padding: 25px 28px;
+  background: #dac9c9;
+  border-radius: 4px;
+  border: 1px solid #302d2d;
+  animation: popup 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.main_animation {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #70d1f5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
