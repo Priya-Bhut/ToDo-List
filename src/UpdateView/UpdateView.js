@@ -10,7 +10,7 @@ function UpdateView(props) {
   const [show, setShow] = useState(false);
 
   const addData = () => {
-    if (title != "" && desc != "" && status != "") {
+    if (title !== "" && desc !== "" && status !== "") {
       Todo.push({
         id: Todo.length,
         title: title,
@@ -18,10 +18,11 @@ function UpdateView(props) {
         status: status,
       });
       setShow(true);
+    } else {
+      alert("Please Enter all the fields!!");
     }
-    else{
-      alert("Please Enter all the fields")
-    }
+
+   
   };
   return (
     <div>
