@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./UpdateView.css";
 import Todo from "../Todo.json";
 import ListView from "../Todolist/ListView";
@@ -18,21 +18,57 @@ function UpdateView(props) {
         status: status,
       });
       setShow(true);
+
+      // const createdAt = (props) => {
+      //   return new Date().toLocaleString();
+      // };
     } else {
       alert("Please Enter all the fields!!");
     }
-
-   
   };
+
+  const editData = () => {
+    if (title !== "" && desc !== "" && status !== "") {
+      Todo.filter((e) => e.id === props.edit).map((Todolist) => {
+        Todolist.title = title;
+        Todolist.description = desc;
+        Todolist.status = status;
+      });
+      setShow(true);
+    } else {
+      alert("Please Enter all the fields");
+    }
+  };
+  useEffect(() => {
+    return props.edit != null
+      ? Todo.filter((e) => e.id === props.edit).map((Todolist) => {
+          setTitle(Todolist.title);
+          setDesc(Todolist.description);
+          setStatus(Todolist.status);
+        })
+      : null;
+  });
+
+  const logValue = (e) => {
+    if (e.target.name === "title") {
+      setTitle(e.target.value);
+    } else if (e.target.name === "desc") {
+      setDesc(e.target.value);
+    } else {
+      setStatus(e.target.value);
+    }
+  };
+
   return (
     <div>
       {show ? (
         <ListView />
       ) : (
-        <div class="view_details">
+        <div className="view_details">
           <div className="secondheader">
             <h1> CREATE/UPDATE VIEW </h1>
           </div>
+
           <div className="view">
             <div className="view-screen">
               <div className="app-title">
@@ -43,9 +79,9 @@ function UpdateView(props) {
                 <div className="control-group">
                   <input
                     type="text"
-                    value=""
+                    name="title"
                     placeholder="Title"
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => logValue(e)}
                     value={title}
                     id="title"
                   />
@@ -53,10 +89,11 @@ function UpdateView(props) {
                 <div className="control-group">
                   <textarea
                     id="desc"
+                    name="desc"
                     rows="4"
                     cols="30"
                     placeholder="description"
-                    onChange={(e) => setDesc(e.target.value)}
+                    onChange={(e) => logValue(e)}
                     value={desc}
                   ></textarea>
                 </div>
@@ -64,7 +101,7 @@ function UpdateView(props) {
                   <select
                     name="status"
                     id="status"
-                    onChange={(e) => setStatus(e.target.value)}
+                    onChange={(e) => logValue(e)}
                     value={status}
                   >
                     <option value="select">---SELECT---</option>
@@ -81,7 +118,11 @@ function UpdateView(props) {
                   >
                     GO BACK!
                   </button>
-                  <button className="btn" id="button" onClick={addData}>
+                  <button
+                    className="btn"
+                    id="button"
+                    onClick={props.edit != null ? editData : addData}
+                  >
                     CREATE/UPDATE VIEW
                   </button>
                   <br />

@@ -8,6 +8,7 @@ function ListView() {
   const [toDoList, setToDoList] = useState([]);
   const [inProgress, setinProgress] = useState([]);
   const [done, setdone] = useState([]);
+  const [EditId, setEditId] = useState(null);
 
   useEffect(() => {
     const Todolist = Todo.filter((e) => e.status === "ToDo");
@@ -17,29 +18,45 @@ function ListView() {
     const done = Todo.filter((e) => e.status === "Done");
     setdone(done);
   }, []);
-  
-  const deleteItem = (id) => {
-    const newItem = done.filter((done) => done.id !== id);
-    setdone(newItem);
+
+  function removeItem(id) {
+    const deleteItems = done.filter((Todolist) => {
+      return Todolist.id !== id;
+    });
+    setdone(deleteItems);
+  }
+
+  const editItem = (e) => {
+    setEditId(e);
+    setShow(!show);
   };
 
-   const editItem = (e) => {
-      console.log(e);
-  };
   const toDoItem = toDoList.map((Todolist) => (
     <li>
       {Todolist.title}
-      <button type="button" onClick={editItem(Todolist.id)}>
-        <i className="fas fa-edit fas_space" />
-      </button>
+      <br />
+
+      <i
+        className="fas fa-edit fas_space"
+        onClick={() => editItem(Todolist.id)}
+      />
     </li>
   ));
 
- 
+  const inProgressItem = inProgress.map((Todolist) => (
+    <li>
+      {Todolist.title}
+      <i
+        className="fas fa-edit fas_space"
+        onClick={() => editItem(Todolist.id)}
+      />
+    </li>
+  ));
+
   return (
     <div>
       {show ? (
-        <UpdateView />
+        <UpdateView edit={EditId} />
       ) : (
         <div className="main_animation">
           <div className="header">
@@ -48,7 +65,7 @@ function ListView() {
             <h1>TO DO LIST</h1>
           </div>
           <div className="btnCreate">
-            <button onClick={() => setShow(true)}>CREATE </button>
+            <button onClick={() => setShow(!show)}>CREATE </button>
           </div>
           <div className="main_div">
             <div className="center_div">
@@ -61,14 +78,7 @@ function ListView() {
               <br />
               <h1 className="header"> In Progress</h1>
               <br />
-              <ul type="none">
-                {inProgress.map((Todolist) => (
-                  <li>
-                    {Todolist.title}{" "}
-                    <i className="fas fa-edit fas_space" onClick={editItem} />
-                  </li>
-                ))}
-              </ul>
+              <ul type="none">{inProgressItem}</ul>
             </div>
             <div className="center_div">
               <br />
@@ -77,11 +87,11 @@ function ListView() {
 
               <ul type="none">
                 {done.map((Todolist) => (
-                  <li>
-                    {Todolist.title}{" "}
+                  <li key={Todolist.id}>
+                    {Todolist.title}
                     <i
                       className="fas fa-trash fas_space"
-                      onClick={deleteItem}
+                      onClick={() => removeItem(Todolist.id)}
                     />
                   </li>
                 ))}
