@@ -8,6 +8,7 @@ function UpdateView(props) {
   const [desc, setDesc] = useState("");
   const [status, setStatus] = useState("");
   const [show, setShow] = useState(false);
+  const [editItem, setEditItem] = useState(null);
 
   const addData = () => {
     if (title !== "" && desc !== "" && status !== "") {
@@ -18,10 +19,6 @@ function UpdateView(props) {
         status: status,
       });
       setShow(true);
-
-      // const createdAt = (props) => {
-      //   return new Date().toLocaleString();
-      // };
     } else {
       alert("Please Enter all the fields!!");
     }
@@ -29,35 +26,26 @@ function UpdateView(props) {
 
   const editData = () => {
     if (title !== "" && desc !== "" && status !== "") {
-      Todo.filter((e) => e.id === props.edit).map((Todolist) => {
-        Todolist.title = title;
-        Todolist.description = desc;
-        Todolist.status = status;
-      });
+      const index = Todo.findIndex((e) => e.id === editItem.id);
+      Todo[index] = { id: editItem.id, title, description: desc, status };
       setShow(true);
     } else {
       alert("Please Enter all the fields");
     }
   };
   useEffect(() => {
-    return props.edit != null
-      ? Todo.filter((e) => e.id === props.edit).map((Todolist) => {
-          setTitle(Todolist.title);
-          setDesc(Todolist.description);
-          setStatus(Todolist.status);
-        })
-      : null;
-  });
-
-  const logValue = (e) => {
-    if (e.target.name === "title") {
-      setTitle(e.target.value);
-    } else if (e.target.name === "desc") {
-      setDesc(e.target.value);
-    } else {
-      setStatus(e.target.value);
+    const { edit } = props;
+    if (edit) {
+      setTitle(edit.title);
+      setDesc(edit.description);
+      setStatus(edit.status);
+      setEditItem(edit);
     }
-  };
+  }, [props.edit]);
+
+  useEffect(() => {
+    console.log(editItem);
+  }, [editItem]);
 
   return (
     <div>
@@ -81,7 +69,7 @@ function UpdateView(props) {
                     type="text"
                     name="title"
                     placeholder="Title"
-                    onChange={(e) => logValue(e)}
+                    onChange={(e) => setTitle(e.target.value)}
                     value={title}
                     id="title"
                   />
@@ -93,7 +81,7 @@ function UpdateView(props) {
                     rows="4"
                     cols="30"
                     placeholder="description"
-                    onChange={(e) => logValue(e)}
+                    onChange={(e) => setDesc(e.target.value)}
                     value={desc}
                   ></textarea>
                 </div>
@@ -101,7 +89,7 @@ function UpdateView(props) {
                   <select
                     name="status"
                     id="status"
-                    onChange={(e) => logValue(e)}
+                    onChange={(e) => setStatus(e.target.value)}
                     value={status}
                   >
                     <option value="select">---SELECT---</option>
@@ -110,6 +98,8 @@ function UpdateView(props) {
                     <option value="Done">DONE</option>
                   </select>
                 </div>
+
+                <br />
                 <div className="buttonList">
                   <button
                     className="btn"
@@ -121,7 +111,7 @@ function UpdateView(props) {
                   <button
                     className="btn"
                     id="button"
-                    onClick={props.edit != null ? editData : addData}
+                    onClick={props.edit ? editData : addData}
                   >
                     CREATE/UPDATE VIEW
                   </button>

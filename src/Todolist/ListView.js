@@ -19,37 +19,27 @@ function ListView() {
     setdone(done);
   }, []);
 
-  function removeItem(id) {
-    const deleteItems = done.filter((Todolist) => {
-      return Todolist.id !== id;
-    });
-    setdone(deleteItems);
+  function removeItem(index) {
+    done.splice(index, 1);
+    setdone([...done]);
   }
-
   const editItem = (e) => {
     setEditId(e);
     setShow(!show);
   };
-
-  const toDoItem = toDoList.map((Todolist) => (
+  const toDoItem = toDoList?.map((ele) => (
     <li>
-      {Todolist.title}
+      {ele.title}
       <br />
-
-      <i
-        className="fas fa-edit fas_space"
-        onClick={() => editItem(Todolist.id)}
-      />
+      <i className="fas fa-edit fas_space" onClick={() => editItem(ele)} />
     </li>
   ));
 
-  const inProgressItem = inProgress.map((Todolist) => (
+  const inProgressItem = inProgress.map((ele) => (
     <li>
-      {Todolist.title}
-      <i
-        className="fas fa-edit fas_space"
-        onClick={() => editItem(Todolist.id)}
-      />
+      {ele.title}
+      <br />
+      <i className="fas fa-edit fas_space" onClick={() => editItem(ele)} />
     </li>
   ));
 
@@ -86,12 +76,12 @@ function ListView() {
               <br />
 
               <ul type="none">
-                {done.map((Todolist) => (
-                  <li key={Todolist.id}>
-                    {Todolist.title}
+                {done.map((ele, index) => (
+                  <li key={index}>
+                    {ele.title}
                     <i
                       className="fas fa-trash fas_space"
-                      onClick={() => removeItem(Todolist.id)}
+                      onClick={() => removeItem(index)}
                     />
                   </li>
                 ))}
